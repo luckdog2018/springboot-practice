@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- mysql驱动的位置 这个是MySQL连接的jar包，你需要指定你自己计算机上的jar包的位置-->
+    <!--由于在插件中添加mysql驱动依赖，这里不用了！-->
+    <!--    <classPathEntry location="C:\Users\wuzexin\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar" />-->
+    <context id="testTables" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接信息 -->
+        <!--这里是逆向工程所用的jdbc，高版本mysql驱动是要com.mysql.cj.jdbc.Driver-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhsot:3306/user?serverTimezone=UTC&amp;useSSL=false"
+                        userId="root"
+                        password="root"/>
+        <!-- 默认false，把jdbc decimal 和numeric类型解析为Integer，为true时把jdbc decimal numeric类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- targetProject用于生成bean类的位置，其实就是表对应的类-->
+        <javaModelGenerator targetPackage="com.lyon.reverse.pojo" targetProject="./src/main/java">
+            <!-- enableSubPackages配置是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- targetProject配置mapper映射文件生成位置,设置成resource包下-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <!-- enableSubPackages配置是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage配置mapper接口的位置 -->
+        <javaClientGenerator targetPackage="com.lyon.reverse.dao" type="XMLMAPPER" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 指定数据库表 -->
+        <table tableName="friend"/>
+        <table tableName="user"/>
+    </context>
+</generatorConfiguration>
